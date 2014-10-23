@@ -1,0 +1,23 @@
+{
+  "name": "IFrameLiveCodingWidget",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-vulcanize": "^0.3.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "coffee-script": "^1.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Williams",
+  "license": "---"
+}
