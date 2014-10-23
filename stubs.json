@@ -1,0 +1,3 @@
+var stubs = {
+  "a": "var c = document.querySelector(\"#c\");\nvar ctx = c.getContext(\"2d\");\nctx.fillStyle = \"blue\";\nctx.fillRect(0,0,50,50);"
+}

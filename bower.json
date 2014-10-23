@@ -1,0 +1,15 @@
+{
+  "name": "IFrameLiveCodingWidget",
+  "description": "",
+  "homepage": "",
+  "keywords": [
+  ],
+  "author": "James Williams",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "platform": "Polymer/platform#master",
+    "paper-elements": "Polymer/paper-elements#master",
+    "code-mirror": "Polymer/code-mirror#master"
+  }
+}
