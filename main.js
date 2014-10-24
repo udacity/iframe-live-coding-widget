@@ -5,6 +5,7 @@ toastGroupTemplate.showToast = function() {
 
 var tabs = document.querySelector('paper-tabs');
 var pages = document.querySelector('core-pages');
+var exerciseId, content;
 
 tabs.addEventListener('core-select',function(){
   pages.selected = tabs.selected;
@@ -38,9 +39,19 @@ runButton.addEventListener('click', function(e) {
   eval(content);
 });
 
+// Reset code
+var resetButton = document.querySelector('#btnReset');
+resetButton.addEventListener('click', function(e) {
+  if (content == undefined) {
+    content = stubs[exerciseId].join("\n");
+  }
+  editor.mirror.setValue(content);
+  runButton.click();
+});
+
 // Load code
 window.addEventListener('polymer-ready', function(e) {
-  var exercise = queryDict["exercise"];
-  var content = stubs[exercise];
+  exerciseId = queryDict["exercise"];
+  content = stubs[exerciseId].join("\n");
   editor.mirror.setValue(content);
 });
