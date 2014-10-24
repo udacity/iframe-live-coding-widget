@@ -31,7 +31,6 @@ var runButton = document.querySelector('#btnRun');
 var editor = document.querySelector('#editor');
 runButton.addEventListener('click', function(e) {
   var content = editor.mirror.getValue();
-  console.log(content);
   var canvas = document.querySelector("#c");
   // Clear canvas
   canvas.height = canvas.height;canvas.width = canvas.width;
