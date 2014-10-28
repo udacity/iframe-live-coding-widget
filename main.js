@@ -1,8 +1,3 @@
-var toastGroupTemplate = document.querySelector('#toastGroup');
-toastGroupTemplate.showToast = function() {
-  document.querySelector('#toast').show();
-}
-
 var tabs = document.querySelector('paper-tabs');
 var pages = document.querySelector('core-pages');
 var exerciseId, content;
