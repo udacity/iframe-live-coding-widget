@@ -26,7 +26,7 @@ Grab the following files/directories and put them on your server.
 
 After installing the files to your server, you can prepopulate any of
 the starter code stubs by navigating to
-http(s)://hostpath/file.html?exercise=<stub name>
+http(s)://hostpath/file.html?exercise=nameOfStub
 
 ###Adding more templates
 
