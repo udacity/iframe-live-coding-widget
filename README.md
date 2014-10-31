@@ -18,7 +18,6 @@ Grab the following files/directories and put them on your server.
 * images/
 * build.html
 * build.js
-* styles.css
 * bower_components/
 * stubs.json
 
