@@ -1,15 +1,12 @@
-var toastGroupTemplate = document.querySelector('#toastGroup');
-toastGroupTemplate.showToast = function() {
-  document.querySelector('#toast').show();
-}
+var root = document.querySelector('live-coding-canvas');
 
 var tabs = document.querySelector('paper-tabs');
 var pages = document.querySelector('core-pages');
 var exerciseId, content;
 
 // Run code
-var runButton = document.querySelector('#btnRun');
-var editor = document.querySelector('#editor');
+var runButton = root.$.btnRun;
+var editor = root.$.editor;
 var evalCanvasCode = function(e) {
   var content = editor.mirror.getValue();
   var canvas = document.querySelector("#c");
