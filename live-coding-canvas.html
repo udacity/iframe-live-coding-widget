@@ -1,0 +1,168 @@
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+
+  <link rel="import" href="bower_components/font-roboto/roboto.html">
+  <link rel="import" href="bower_components/paper-button/paper-button.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="bower_components/code-mirror/code-mirror.html">
+
+  <script src="stubs.json"></script>
+</head>
+<polymer-element name="live-coding-canvas">
+  <template>
+    <style>
+      :host {
+        font-family: RobotoDraft, sans-serif;
+        color: #333;
+        margin: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-touch-callout: none;
+      }
+
+      section {
+        margin: 20px;
+      }
+
+      a, a:hover {
+        text-decoration: none;
+      }
+
+      core-toolbar {
+        background-color: #455ede;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+        color: #fff;
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 1.5em;
+      }
+
+      paper-button {
+        margin: 0.5em 1em 0.5em 0;
+        width: 10em;
+      }
+
+      paper-button[right] {
+        position: fixed;
+        right: 0;
+      }
+
+      paper-checkbox {
+        margin-left: 1em;
+      }
+
+      paper-fab {
+        position: absolute !important;
+        top: 35px;
+        right: 1em;
+        z-index: 1;
+      }
+
+      paper-tabs {
+        background-color: #5677fc;
+        color: #fff;
+        height: 30px;
+      }
+
+      paper-tabs[noink][nobar] paper-tab.core-selected {
+        color: #ffff8d;
+      }
+
+      #editor {
+        width: 100%;
+        height: 400px;
+        display: block;
+      }
+
+      canvas {
+        width: 100%;
+        height: 500px;
+      }
+    </style>
+    <section>
+      <paper-tabs id="tabs" selected="0">
+        <paper-tab id="code-page">Code</paper-tab>
+        <paper-tab id="canvas-page">Canvas</paper-tab>
+      </paper-tabs>
+
+      <core-pages selected="{{$.paper-tabs.selected}}" selectedindex="0" id="core-pages">
+        <div id="code-page">
+          <paper-button raised id='btnRun'>Run code</paper-button>
+          <paper-button raised id='btnReset'>Reset code</paper-button>
+          <code-mirror id="editor" theme="twilight" mode="javascript"></code-mirror>
+        </div>
+        <div id="canvas-page">
+          <span>Your JavaScript code will draw on the Canvas below.</span>
+          <canvas id="c"></canvas>
+        </div>
+      </core-pages>
+    </section>
+  </template>
+  <script>
+      Polymer('live-coding-canvas', {
+          created: function() {
+
+          },
+          ready: function() {
+
+            this.$.queryDict = this.createDict();
+            this.$.exerciseId = this.$.queryDict["exercise"];
+            this.$.content = stubs[this.$.exerciseId].join("\n");
+            this.$.editor.mirror.setValue(this.$.content);
+            this.$.tabs.addEventListener('core-select', this.selectPage);
+            this.$.btnReset.addEventListener('click', this.resetCode);
+            this.$.btnRun.addEventListener('click', this.runCode);
+
+          },
+          createDict: function() {
+            // parse query string into dictionary
+            var dict = {};
+            location.search.substr(1).split("&").forEach(function(item) {
+              var data = item.split("=");
+              dict[data[0]] = data[1];
+            });
+            return dict;
+          },
+          selectPage: function() {
+            var root = document.querySelector('live-coding-canvas');
+            var tabs = root.$.tabs;
+            var pages = root.$['core-pages'];
+            pages.selected = tabs.selected;
+            if (pages.selected === 0) {
+              // Code page selected
+              pages.querySelectorAll("div")[0].style.display = "block";
+              pages.querySelectorAll("div")[1].style.display = "none";
+            } else if (pages.selected == 1) {
+              // Canvas page selected
+              pages.querySelectorAll("div")[0].style.display = "none";
+              pages.querySelectorAll("div")[1].style.display = "block";
+              // Run canvas code
+              root.$.btnRun.click();
+            } else {
+              pages.querySelectorAll("div")[1].style.display = "none";
+            }
+          },
+          runCode: function(e) {
+            var root, c, code;
+            root = document.querySelector('live-coding-canvas');
+            c = root.$.c;
+            c.height = c.height; c.width = c.width;
+            code = root.$.editor.mirror.getValue();
+            eval(code);
+          },
+          resetCode: function(e) {
+            var root = document.querySelector('live-coding-canvas');
+            if (root.$.content == undefined) {
+              root.$.content = stubs[root.$.exerciseId].join("\n");
+            }
+            root.$.editor.mirror.setValue(root.$.content);
+            root.$.btnRun.click();
+          }
+      });
+      function getCanvas() {
+        return document.querySelector('live-coding-canvas').$.c;
+      }
+  </script>
+</polymer-element>

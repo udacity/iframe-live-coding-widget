@@ -1,6 +1,6 @@
 var stubs = {
   "a": [
-    "var c = document.querySelector('#c');",
+    "var c = getCanvas();",
     "var ctx = c.getContext('2d');",
     "ctx.fillStyle = 'blue';",
     "ctx.fillRect(0,0,50,50);"
@@ -14,7 +14,7 @@ var stubs = {
     "animate();",
 
     "function init() {",
-    "    canvas = document.querySelector( '#c' );",
+    "    canvas = getCanvas();",
     "    context = canvas.getContext( '2d' );",
     "}",
 
@@ -38,7 +38,7 @@ var stubs = {
     "}"
   ],
   "invertColor": [
-    "var c = document.querySelector('#c');",
+    "var c = getCanvas();",
     "c.width = 960;",
     "c.height = 540;",
     "var ctx = c.getContext('2d');",
@@ -64,7 +64,7 @@ var stubs = {
     "image.src = 'images/image-1200.png';"
   ],
   "transformation": [
-    "var c = document.querySelector('#c');",
+    "var c = getCanvas();",
     "var ctx = c.getContext('2d');",
     "",
     "ctx.save();",
