@@ -7,7 +7,7 @@
 
   <script src="stubs.json"></script>
 </head>
-<polymer-element name="live-coding-canvas">
+<polymer-element name="live-coding-canvas" constructor="LiveCodingCanvas" attributes="theme">
   <template>
     <style>
       :host {
@@ -91,7 +91,7 @@
         <div id="code-page">
           <paper-button raised id='btnRun'>Run code</paper-button>
           <paper-button raised id='btnReset'>Reset code</paper-button>
-          <code-mirror id="editor" theme="twilight" mode="javascript"></code-mirror>
+          <code-mirror id="editor" theme="{{theme}}" mode="javascript"></code-mirror>
         </div>
         <div id="canvas-page">
           <span>Your JavaScript code will draw on the Canvas below.</span>
@@ -102,11 +102,7 @@
   </template>
   <script>
       Polymer('live-coding-canvas', {
-          created: function() {
-
-          },
           ready: function() {
-
             this.$.queryDict = this.createDict();
             this.$.exerciseId = this.$.queryDict["exercise"];
             this.$.content = stubs[this.$.exerciseId].join("\n");
@@ -114,7 +110,6 @@
             this.$.tabs.addEventListener('core-select', this.selectPage);
             this.$.btnReset.addEventListener('click', this.resetCode);
             this.$.btnRun.addEventListener('click', this.runCode);
-
           },
           createDict: function() {
             // parse query string into dictionary
@@ -159,6 +154,10 @@
             }
             root.$.editor.mirror.setValue(root.$.content);
             root.$.btnRun.click();
+          },
+          theme: 'twilight',
+          themeChanged: function(oldValue, newValue) {
+            this.$.editor.theme = newValue;
           }
       });
       function getCanvas() {
