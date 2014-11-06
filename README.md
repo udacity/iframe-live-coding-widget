@@ -8,12 +8,12 @@ This is an embedded live coding widget built to support UD292 (Canvas 2D). The w
 You must have Node.js, NPM, and Bower installed.
 
 * Run `bower install` to grab the required dependencies.
-* Run `grunt --serve` to run the app locally. Vulcanize will make
-  build.html and build.js files for you.
 
 Make sure vulcanize is installed and run:
 
 `vulcanize -o build.html -s index.html`
+
+That command inlines all the HTMLImports, strips out whitespace, and fixes some other minor problems. HTMLImports don't work on anything but recent versions of Chrome and Firefox so you have to vulcanize.
 
 ###Install
 
