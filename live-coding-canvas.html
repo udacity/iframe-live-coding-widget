@@ -103,8 +103,13 @@
       Polymer('live-coding-canvas', {
           ready: function() {
             this.$.queryDict = this.createDict();
-            this.$.exerciseId = this.$.queryDict["exercise"];
-            this.$.content = stubs[this.$.exerciseId].join("\n");
+            // Default to exercise a if no query string param called exercise or
+            // the exercise id doesn't exist in stubs
+            this.$.exerciseId =
+              this.$.queryDict["exercise"] != undefined ? this.$.queryDict["exercise"] : "a";
+
+            this.$.content =
+              stubs[this.$.exerciseId] != undefined ? stubs[this.$.exerciseId].join("\n") : stubs["a"].join("\n");
             this.$.editor.mirror.setValue(this.$.content);
             this.$.tabs.addEventListener('core-select', this.selectPage);
             this.$.btnReset.addEventListener('click', this.resetCode);
