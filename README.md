@@ -11,6 +11,10 @@ You must have Node.js, NPM, and Bower installed.
 * Run `grunt --serve` to run the app locally. Vulcanize will make
   build.html and build.js files for you.
 
+Make sure vulcanize is installed and run:
+
+`vulcanize -o build.html -s index.html`
+
 ###Install
 
 Grab the following files/directories and put them on your server.
