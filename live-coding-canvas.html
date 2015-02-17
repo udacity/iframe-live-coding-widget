@@ -4,6 +4,7 @@
   <link rel="import" href="bower_components/paper-button/paper-button.html">
   <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
   <link rel="import" href="bower_components/code-mirror/code-mirror.html">
+  <link rel="import" href="bower_components/core-ajax/core-ajax.html">
 
   <script src="stubs.json"></script>
 </head>
@@ -77,10 +78,14 @@
 
       canvas {
         width: 100%;
-        height: 500px;
+        height: 90%;
       }
     </style>
     <section>
+      <core-ajax auto url="https://api.github.com/gists/d08acbbac1f2d9506fde"
+        params='{"alt":"json", "q":"chrome"}'
+        handleAs="json"
+        on-core-response="{{handleResponse}}"></core-ajax>
       <paper-tabs id="tabs" selected="0">
         <paper-tab id="code-page">Code</paper-tab>
         <paper-tab id="canvas-page">Canvas</paper-tab>
@@ -162,6 +167,12 @@
           theme: 'twilight',
           themeChanged: function(oldValue, newValue) {
             this.$.editor.theme = newValue;
+          },
+          handleResponse: function(result){
+            var files = result.detail.response.files
+            var filename = Object.keys(files)[0];
+            this.$.content = files[filename].content;
+            this.resetCode();
           }
       });
       function getCanvas() {
