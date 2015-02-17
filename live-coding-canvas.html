@@ -82,10 +82,10 @@
       }
     </style>
     <section>
-      <core-ajax auto url="https://api.github.com/gists/d08acbbac1f2d9506fde"
+      <core-ajax  url=""
         params='{"alt":"json", "q":"chrome"}'
         handleAs="json"
-        on-core-response="{{handleResponse}}"></core-ajax>
+        on-core-response="{{handleResponse}}" id="req"></core-ajax>
       <paper-tabs id="tabs" selected="0">
         <paper-tab id="code-page">Code</paper-tab>
         <paper-tab id="canvas-page">Canvas</paper-tab>
@@ -106,16 +106,23 @@
   </template>
   <script>
       Polymer('live-coding-canvas', {
+          gistRoot: "https://api.github.com/gists/",
           ready: function() {
             this.$.queryDict = this.createDict();
-            // Default to exercise a if no query string param called exercise or
-            // the exercise id doesn't exist in stubs
-            this.$.exerciseId =
-              this.$.queryDict["exercise"] != undefined ? this.$.queryDict["exercise"] : "a";
+            if (this.$.queryDict["gist"] != undefined) {
+              this.$.req.url = this.gistRoot + this.$.queryDict["gist"];
+              this.$.req.go();
+            } else {
 
-            this.$.content =
-              stubs[this.$.exerciseId] != undefined ? stubs[this.$.exerciseId].join("\n") : stubs["a"].join("\n");
-            this.$.editor.mirror.setValue(this.$.content);
+              // Default to exercise a if no query string param called exercise or
+              // the exercise id doesn't exist in stubs
+              this.$.exerciseId =
+                this.$.queryDict["exercise"] != undefined ? this.$.queryDict["exercise"] : "a";
+
+              this.$.content =
+                stubs[this.$.exerciseId] != undefined ? stubs[this.$.exerciseId].join("\n") : stubs["a"].join("\n");
+              this.$.editor.mirror.setValue(this.$.content);
+            }
             this.$.tabs.addEventListener('core-select', this.selectPage);
             this.$.btnReset.addEventListener('click', this.resetCode);
             this.$.btnRun.addEventListener('click', this.runCode);
