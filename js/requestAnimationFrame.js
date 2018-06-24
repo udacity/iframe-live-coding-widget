@@ -3,7 +3,7 @@ var canvas, context;
 init();
 animate();
 function init() {
-    canvas = getCanvas();
+    canvas = document.querySelector("#c");
     context = canvas.getContext( '2d' );
 }
 function animate() {
